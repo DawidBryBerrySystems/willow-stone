@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Colors and fonts are defined once here and exposed to
+ * Tailwind as utilities (bg-page, text-ink, font-heading, ...).
+ * Font families come from next/font CSS variables set in layout.tsx.
+ */
+@theme inline {
+  --color-page: #fbf3f0;
+  --color-card: #ffffff;
+  --color-band: #f3e4dd;
+  --color-line: #ecd9d2;
+  --color-ink: #3b2a26;
+  --color-muted: #6b5650;
+  --color-primary: #9c523a;
+  --color-primary-hover: #82432e;
+  --color-champagne: #d9b99b;
+  --color-dark: #3b2a26;
+  --color-on-dark: #fbf3f0;
+
+  --font-heading: var(--font-marcellus), Georgia, serif;
+  --font-sans: var(--font-nunito-sans), ui-sans-serif, sans-serif;
+}
+
+/* Layout helpers: 1120px content width, 24px / 40px gutters. */
+@utility container-site {
+  box-sizing: content-box;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 24px;
+  @media (min-width: 768px) {
+    padding-inline: 40px;
+  }
+}
+
+/* Section rhythm: 72px vertical on mobile, 104px on desktop. */
+@utility section-y {
+  padding-block: 72px;
+  @media (min-width: 768px) {
+    padding-block: 104px;
+  }
+}
+
+:root {
+  /* Fixed header height, used for sticky offsets and anchor scrolling. */
+  --header-h: 72px;
+  --subnav-h: 57px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 137px;
+  }
+}
+
+html {
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+/* Visible focus outlines everywhere. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* On dark surfaces the terracotta outline is too low-contrast, so use the light tone. */
+.on-dark :focus-visible {
+  outline-color: var(--color-on-dark);
+}
+
+#main:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
